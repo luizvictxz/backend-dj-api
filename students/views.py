@@ -5,7 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.db.models import Sum
 from django.shortcuts import redirect, render
 
-from .forms import RegisterStudent, RegistrationStudentForm
+from .forms import RegisterCourse, RegisterStudent, RegistrationStudentForm
 from .models import Course, Registration, Student
 
 
@@ -100,8 +100,18 @@ def students_view(request):
 @login_required
 def courses_view(request):
     courses_all = Course.objects.all().order_by('-id')
+    if request.method == 'POST':
+        form = RegisterCourse(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Curso adicionado com sucesso!")
+            return redirect('courses')
+    else:
+        form = RegisterCourse()
+
     context = {
         'active': 'cour',
-        'cursos': courses_all
+        'cursos': courses_all,
+        'form': form
     }
     return render(request, "courses.html", context)

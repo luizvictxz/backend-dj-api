@@ -5,7 +5,7 @@
     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
         <h5 class="mb-0 fw-bold">Cursos</h5>
         <div>
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalMatricula">
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalCurso">
                 <i class="fas fa-plus"></i> Novo Curso
             </button>
         </div>
@@ -31,7 +31,7 @@
                             {% if cur.is_active %}
                                 <span class="badge bg-success bg-opacity-75">Ativo</span>
                             {% else %}
-                            <span class="badge bg-informacion text-dark">Inativo</span>
+                            <span class="badge bg-informacion text-muted">Inativo</span>
                             {% endif %}
                         </td>
                         
@@ -41,6 +41,62 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalCurso" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Novo Curso</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Nome do curso</label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <div class="text-danger small mt-1">{{ form.name.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Carga horária</label>
+                        {{ form.workload }}
+                        {% if form.workload.errors %}
+                            <div class="text-danger small mt-1">{{ form.workload.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Preço</label>
+                        {{ form.registration_fee }}
+                        {% if form.registration_fee.errors %}
+                            <div class="text-danger small mt-1">{{ form.registration_fee.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Ativo</label>
+                        {{ form.is_active }}
+                        {% if form.is_active.errors %}
+                            <div class="text-danger small mt-1">{{ form.is_active.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger p-2 small">{{ form.non_field_errors.0 }}</div>
+                    {% endif %}
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary" name="btn-mat">Adicionar Curso</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
