@@ -1,3 +1,4 @@
+from django.contrib.messages import constants as messages
 import os
 from pathlib import Path
 
@@ -17,6 +18,13 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+MESSAGE_TAGS = {
+    # Django usa 'error', Bootstrap usa 'danger' (vermelho)
+    messages.ERROR: 'danger',
+    messages.SUCCESS: 'success',  # Verde
+    messages.WARNING: 'warning',  # Amarelo
+    messages.INFO: 'info',       # Azul
+}
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

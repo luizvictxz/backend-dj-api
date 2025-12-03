@@ -1,6 +1,7 @@
-from django.db.models import Sum
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import redirect, render
 
+from .forms import RegistrationStudentForm
 from .models import Course, Registration, Student
 
 # Create your views here.
@@ -29,14 +30,36 @@ def dashboard(request):
         'total_alunos': students_all,
         'cursos_ativos': courses_is_active,
         'receita_total': sum,
-        'matriculas': registration_lasts
+        'matriculas': registration_lasts,
+        'active': 'dash'
     }
     return render(request, "dashboard.html", context)
 
 
 def students(request):
-    return render(request, "students.html")
+    if request.method == "POST":
+        form = RegistrationStudentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Matrícula realizada com sucesso!')
+            return redirect('students')
+        messages.error(request, 'Erro ao salvar. Verifique os campos abaixo.')
+    else:
+        form = RegistrationStudentForm()
+    students_all = Registration.objects.select_related(
+        "student", "course").order_by("-id")
+    context = {
+        'active': 'stu',
+        'matriculas': students_all,
+        'form': form
+    }
+    return render(request, "students.html", context)
 
 
 def courses(request):
-    return render(request, "courses.html")
+    courses_all = Course.objects.all().order_by('-id')
+    context = {
+        'active': 'cour',
+        'cursos': courses_all
+    }
+    return render(request, "courses.html", context)
