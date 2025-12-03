@@ -7,7 +7,7 @@ class Student(models.Model):
     name = models.CharField(max_length=200)
     email = models.EmailField(unique=True)
     cpf = models.CharField(max_length=11, unique=True)
-    date_into = models.DateField(auto_created=True)
+    date_into = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.name

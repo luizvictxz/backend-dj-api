@@ -1,11 +1,11 @@
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.db.models import Sum
 from django.shortcuts import redirect, render
 
-from .forms import RegistrationStudentForm
+from .forms import RegisterStudent, RegistrationStudentForm
 from .models import Course, Registration, Student
 
 
@@ -15,7 +15,7 @@ def login_view(request):
         if form.is_valid():
             login(request, form.get_user())
             return redirect("dashboard")
-        messages.error(request, "Usuário ou senha inválidos.")
+        print("ERROS DO FORM:", form.errors)
     else:
         form = AuthenticationForm()
     return render(request, "login.html", {"form": form})
@@ -31,6 +31,12 @@ def register_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
 
 @login_required
@@ -58,20 +64,27 @@ def dashboard_view(request):
     }
     return render(request, "dashboard.html", context)
 
-# --- MATRÍCULAS ---
-
 
 @login_required
 def students_view(request):
+    form_regis = RegistrationStudentForm()
+    form_stu = RegisterStudent()
     if request.method == "POST":
-        form = RegistrationStudentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Matrícula realizada com sucesso!')
-            return redirect('students')
-        messages.error(request, 'Erro ao salvar. Verifique os campos.')
-    else:
-        form = RegistrationStudentForm()
+        if 'btn-mat' in request.POST:
+
+            form_regis = RegistrationStudentForm(request.POST)
+            if form_regis.is_valid():
+                form_regis.save()
+                messages.success(request, 'Matrícula realizada com sucesso!')
+                return redirect('students')
+            messages.error(request, 'Erro ao salvar. Verifique os campos.')
+        elif 'btn-al' in request.POST:
+            form_stu = RegisterStudent(request.POST)
+            if form_stu.is_valid():
+                form_stu.save()
+                messages.success(request, 'Aluno cadastrado com sucesso!')
+                return redirect('students')
+            messages.error(request, 'Erro ao salvar. Verifique os campos.')
 
     matriculas_all = Registration.objects.select_related(
         "student", "course").order_by("-id")
@@ -79,7 +92,8 @@ def students_view(request):
     context = {
         'active': 'stu',
         'matriculas': matriculas_all,
-        'form': form
+        'form_regis': form_regis,
+        'form_stu': form_stu
     }
     return render(request, "students.html", context)
 

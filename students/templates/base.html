@@ -61,7 +61,7 @@
                 <li class="nav-item"><a class="nav-link {% if active == 'stu' %}active{% endif %}" href="{% url "students" %}"><i class="fas fa-users"></i> Alunos</a></li>
                 <li class="nav-item"><a class="nav-link {% if active == 'cour' %}active{% endif %}" href="{% url "courses" %}"><i class="fas fa-book"></i> Cursos</a></li>
                 <li class="nav-item"><a class="nav-link {% if active == 'fina' %}active{% endif %}" href="#"><i class="fas fa-file-invoice-dollar"></i> Financeiro</a></li>
-                <li class="nav-item mt-5"><a class="nav-link text-danger" href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                <li class="nav-item mt-5"><a class="nav-link text-danger" href="{% url "logout" %}"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </nav>
 
