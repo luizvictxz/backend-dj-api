@@ -22,28 +22,35 @@
                         <th class="ps-4">NOME</th>
                         <th>E-MAIL</th>
                         <th>CPF</th>
-                        <th>CURSO</th>
-                        <th>DATA</th>
-                        <th>STATUS</th> </tr>
+                        <th>MATRÍCULAS (Curso / Status)</th>
+                        <th>DATA CADASTRO</th>
+                        </tr>
                 </thead>
                 <tbody>
-                    {% for mat in matriculas %}
+                    {% for aluno in alunos %}
                     <tr>
-                        <td class="ps-4">{{ mat.student.name }}</td>
-                        <td>{{ mat.student.email }}</td>
-                        <td>{{ mat.student.cpf }}</td>
-                        <td>{{ mat.course.name }}</td>
-                        <td>{{ mat.created_at|date:"d/m/Y" }}</td>
+                        <td class="ps-4">{{ aluno.name }}</td>
+                        <td>{{ aluno.email }}</td>
+                        <td>{{ aluno.cpf }}</td>
                         <td>
-                            {% if mat.status == 'PAGO' %}
-                                <span class="badge bg-success bg-opacity-75">Feito</span>
-                            {% else %}
-                                <span class="badge bg-warning text-dark">Pendente</span>
-                            {% endif %}
-                        </td>
+                        {% for reg in aluno.registration_set.all %}
+                            <div class="d-flex align-items-center mb-1">
+                                <span class="me-2">{{ reg.course.name }}</span>
+                                
+                                {% if reg.status == 'PAGO' %}
+                                    <span class="badge bg-success bg-opacity-75" style="font-size: 0.7em;">Pago</span>
+                                {% else %}
+                                    <span class="badge bg-warning text-dark" style="font-size: 0.7em;">Pendente</span>
+                                {% endif %}
+                            </div>
+                        {% empty %}
+                            <span class="text-muted small">Nenhuma matrícula</span>
+                        {% endfor %}
+                    </td>
+                        <td>{{ aluno.data_into|date:"d/m/Y" }}</td>
                     </tr>
                     {% empty %}
-                    <tr><td colspan="6" class="text-center py-4">Nenhuma matrícula encontrada.</td></tr>
+                    <tr><td colspan="6" class="text-center py-4">Nenhuma aluno encontrado.</td></tr>
                     {% endfor %}
                 </tbody>
             </table>

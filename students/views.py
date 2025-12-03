@@ -86,12 +86,11 @@ def students_view(request):
                 return redirect('students')
             messages.error(request, 'Erro ao salvar. Verifique os campos.')
 
-    matriculas_all = Registration.objects.select_related(
-        "student", "course").order_by("-id")
+    students_all = Student.objects.all().order_by("-id")
 
     context = {
         'active': 'stu',
-        'matriculas': matriculas_all,
+        'alunos': students_all,
         'form_regis': form_regis,
         'form_stu': form_stu
     }
