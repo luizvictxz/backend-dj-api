@@ -136,3 +136,25 @@ def courses(request):
         'form': form
     }
     return render(request, "courses.html", context)
+
+
+@login_required
+def course_edit(request, id):
+    course = get_object_or_404(Course, id=id)
+    if request.method == "POST":
+        form = RegisterCourse(request.POST, instance=course)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Curso atualizado com sucesso!")
+            return redirect("courses")
+    print(form.errors)
+    return redirect("courses")
+
+
+@login_required
+def course_delete(request, id):
+    course = get_object_or_404(Course, id=id)
+    if request.method == "POST":
+        course.delete()
+        messages.success(request, "Curso excluído com sucesso!")
+    return redirect("courses")
