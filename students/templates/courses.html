@@ -158,7 +158,12 @@
 
                     <div class="mb-3">
                         <label class="form-label">Ativo</label>
-                        {{ form.is_active }}
+                        <div class="form-check form-switch">
+                            {{ form.is_active }}
+                            <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
+                                Curso Ativo
+                            </label>
+                        </div>
                         {% if form.is_active.errors %}
                             <div class="text-danger small mt-1">{{ form.is_active.errors.0 }}</div>
                         {% endif %}

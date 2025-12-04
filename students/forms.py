@@ -34,3 +34,13 @@ class RegisterCourse(forms.ModelForm):
     class Meta:
         model = Course
         fields = ['name', 'workload', 'registration_fee', 'is_active']
+
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'workload': forms.NumberInput(attrs={'class': 'form-control'}),
+            'registration_fee': forms.NumberInput(
+                attrs={'class': 'form-control'}),
+            'is_active': forms.CheckboxInput(attrs={
+                'class': 'form-check-input',
+                'role': 'switch'
+            }), }
