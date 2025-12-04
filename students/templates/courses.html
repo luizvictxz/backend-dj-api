@@ -34,6 +34,14 @@
                             <span class="badge bg-informacion text-muted">Inativo</span>
                             {% endif %}
                         </td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalRemove" title="Excluir">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="btn btn-sm btn-light text-primary" title="Editar" data-bs-toggle="modal" data-bs-target="#modalEdit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
                         
                     </tr>
                     {% empty %}

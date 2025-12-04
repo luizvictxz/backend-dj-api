@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.db.models import Sum
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import RegisterCourse, RegisterStudent, RegistrationStudentForm
 from .models import Course, Registration, Student
@@ -40,7 +40,7 @@ def logout_view(request):
 
 
 @login_required
-def dashboard_view(request):
+def dashboard(request):
     # Contagens simples
     total_alunos = Student.objects.count()
     cursos_ativos = Course.objects.filter(is_active=True).count()
@@ -66,7 +66,7 @@ def dashboard_view(request):
 
 
 @login_required
-def students_view(request):
+def students(request):
     form_regis = RegistrationStudentForm()
     form_stu = RegisterStudent()
     if request.method == "POST":
@@ -98,7 +98,28 @@ def students_view(request):
 
 
 @login_required
-def courses_view(request):
+def student_edit(request, id):
+    student = get_object_or_404(Student, id=id)
+    if request.method == "POST":
+        form = RegisterStudent(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Aluno atualizado com sucesso!")
+            return redirect('students')
+    return redirect('students')
+
+
+@login_required
+def student_delete(request, id):
+    student = get_object_or_404(Student, id=id)
+    if request.method == "POST":
+        student.delete()
+        messages.success(request, "Aluno excluído com sucesso!")
+    return redirect('students')
+
+
+@login_required
+def courses(request):
     courses_all = Course.objects.all().order_by('-id')
     if request.method == 'POST':
         form = RegisterCourse(request.POST)

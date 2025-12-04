@@ -8,7 +8,7 @@
             <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalMatricula">
                 <i class="fas fa-plus"></i> Nova Matrícula
             </button>
-            <button class="btn btn-success ms-2" data-bs-toggle="modal" data-bs-target="#modalAluno">
+            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalAluno">
                 <i class="fas fa-user-plus"></i> Novo Aluno
             </button>
         </div>
@@ -46,9 +46,73 @@
                         {% empty %}
                             <span class="text-muted small">Nenhuma matrícula</span>
                         {% endfor %}
-                    </td>
+                        </td>
                         <td>{{ aluno.date_into|date:"d/m/Y" }}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalRemove-{{aluno.id}}" title="Excluir">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="btn btn-sm btn-light text-primary" title="Editar" data-bs-toggle="modal" data-bs-target="#modalEdit-{{aluno.id}}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
                     </tr>
+                    <div class="modal fade" id="modalRemove-{{ aluno.id }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-danger text-white">
+                                    <h5 class="modal-title">Excluir Aluno</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Tem certeza que deseja excluir <strong>{{ aluno.name }}</strong>?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="{% url 'student_delete' aluno.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Sim, excluir</button>
+                                    </form>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="modalEdit-{{ aluno.id }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-primary text-white">
+                                    <h5 class="modal-title">Editar Aluno</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{% url 'student_edit' aluno.id %}" method="POST"> 
+                                        {% csrf_token %}
+                                        
+                                        <div class="mb-3">
+                                            <label>Nome</label>
+                                            <input type="text" name="name" class="form-control" value="{{ aluno.name }}" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label>E-mail</label>
+                                            <input type="email" name="email" class="form-control" value="{{ aluno.email }}" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label>CPF</label>
+                                            <input type="text" name="cpf" class="form-control" value="{{ aluno.cpf }}" required>
+                                        </div>
+
+                                        <div class="d-flex justify-content-end">
+                                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {% empty %}
                     <tr><td colspan="6" class="text-center py-4">Nenhuma aluno encontrado.</td></tr>
                     {% endfor %}

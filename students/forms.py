@@ -22,6 +22,12 @@ class RegisterStudent(forms.ModelForm):
     class Meta:
         model = Student
         fields = ['name', 'email', 'cpf']
+        # Adicione isso para ficar bonito no HTML
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'cpf': forms.TextInput(
+                attrs={'class': 'form-control', }), }
 
 
 class RegisterCourse(forms.ModelForm):
