@@ -158,3 +158,44 @@ def course_delete(request, id):
         course.delete()
         messages.success(request, "Curso excluído com sucesso!")
     return redirect("courses")
+
+
+@login_required
+def financci(request):
+    students = Student.objects.prefetch_related("registration_set__course")
+
+    financci_data = []
+
+    all_school = 0
+    miss_school = 0
+    # Falta terminar
+    for student in students:
+        paid_student = 0
+        miss_student = 0
+
+        for reg in student.registration_set.all():
+            valor = reg.course.registration_fee
+            if reg.status == "PAGO":
+                paid_student += valor
+            else:
+                miss_student += valor
+
+        all_school += paid_student
+        miss_school += miss_student
+
+        if paid_student > 0 or miss_student > 0:
+            financci_data.append({
+                'aluno': student,
+                'pago': paid_student,
+                'pendente': miss_student,
+                'total_geral': paid_student + miss_student,
+
+            })
+
+    context = {
+        'active': 'fina',
+        'dados': financci_data,
+        'receita_total': all_school,
+        'pendente_total': miss_school
+    }
+    return render(request, "financci.html", context)
