@@ -33,7 +33,7 @@
                         <td>{{ aluno.email }}</td>
                         <td>{{ aluno.cpf }}</td>
                         <td>
-                        {% for reg in aluno.registration_set.all %}
+                        {% for reg in aluno.registration.all %}
                             <div class="d-flex align-items-center mb-1">
                                 <span class="me-2">{{ reg.course.name }}</span>
                                 

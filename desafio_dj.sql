@@ -19,7 +19,7 @@ CREATE TABLE registration(
     student_id INTEGER NOT NULL,
     course_id INTEGER NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    status VARCHAR(10) NOT NULL DEFAULT 'PENDENT',
+    status VARCHAR(10) NOT NULL DEFAULT 'PENDENTE',
 
     CONSTRAINT fk_student FOREIGN KEY (student_id) REFERENCES student(id),
     CONSTRAINT fk_course FOREIGN KEY (course_id) REFERENCES course(id),

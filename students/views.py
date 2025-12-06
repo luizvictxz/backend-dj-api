@@ -79,7 +79,7 @@ class StudentView(LoginRequiredMixin, View):
         context = {
             'active': 'stu',
             'alunos': Student.objects.prefetch_related(
-                "registration_set__course").order_by("-id"),
+                "registration__course").order_by("-id"),
             'form_regis': self.form_regis_class(),
             'form_stu': self.form_stu_class()
         }
@@ -164,17 +164,16 @@ class CourseDeleteView(LoginRequiredMixin, DeleteView):
 class FinancciView(LoginRequiredMixin, View):
 
     def get(self, request):
-        students = Student.objects.prefetch_related("registration_set__course")
+        students = Student.objects.prefetch_related("registration__course")
         financci_data = []
 
         all_school = 0
         miss_school = 0
-        # Falta terminar
         for student in students:
             paid_student = 0
             miss_student = 0
 
-            for reg in student.registration_set.all():
+            for reg in student.registration.all():
                 valor = reg.course.registration_fee
                 if reg.status == "PAGO":
                     paid_student += valor
