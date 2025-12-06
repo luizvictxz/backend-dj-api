@@ -28,8 +28,8 @@ class Registration(models.Model):
         PENDING = 'PENDENTE', 'Pendente'
         PAID = 'PAGO', 'Pago'
 
-    student = models.ForeignKey(Student, on_delete=models.PROTECT)
-    course = models.ForeignKey(Course, on_delete=models.PROTECT)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(
         max_length=10, choices=StatusChoice.choices,

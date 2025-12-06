@@ -157,11 +157,12 @@ class CourseDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("courses")
 
     def form_valid(self, form):
-        messages.success(self.request, "Aluno excluído com sucesso!")
+        messages.success(self.request, "Curso excluído com sucesso!")
         return super().form_valid(form)
 
 
 class FinancciView(LoginRequiredMixin, View):
+
     def get(self, request):
         students = Student.objects.prefetch_related("registration_set__course")
         financci_data = []
