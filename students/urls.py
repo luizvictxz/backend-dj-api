@@ -1,20 +1,30 @@
 from django.urls import path
 
 from . import views
+from .views import (
+    CourseDeleteView,
+    CourseUpdateView,
+    CourseView,
+    DashboardView,
+    FinancciView,
+    StudentDeleteView,
+    StudentUpdateView,
+    StudentView,
+)
 
 urlpatterns = [
     path("", views.login_view, name="login"),
     path("register/", views.register_view, name="register"),
     path("logout/", views.logout_view, name="logout"),
-    path("dashboard/", views.dashboard, name="dashboard"),
-    path("students/", views.students, name="students"),
-    path("courses", views.courses, name="courses"),
+    path("dashboard/", DashboardView.as_view(), name="dashboard"),
+    path("students/", StudentView.as_view(), name="students"),
+    path("courses/", CourseView.as_view(), name="courses"),
     path(
-        'students/edit/<int:id>/', views.student_edit, name="student_edit"),
+        'students/edit/<int:pk>/', StudentUpdateView.as_view(), name="student_edit"),
     path(
-        'students/delete/<int:id>/', views.student_delete,
+        'students/delete/<int:pk>/', StudentDeleteView.as_view(),
         name="student_delete"),
-    path("courses/edit/<int:id>/", views.course_edit, name="course_edit"),
+    path("courses/edit/<int:pk>/", CourseUpdateView.as_view(), name="course_edit"),
     path(
-        "courses/delete/<int:id>/", views.course_delete, name="course_delete"),
-    path("financci/", views.financci, name="financci")]
+        "courses/delete/<int:pk>/", CourseDeleteView.as_view(), name="course_delete"),
+    path("financci/", FinancciView.as_view(), name="financci")]
