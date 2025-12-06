@@ -6,16 +6,16 @@ from .models import Course, Registration, Student
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ["name", "email", "cpf", "date_info"]
+        fields = "__all__"
 
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ["name", "workload", "registration_fee", "is_active"]
+        fields = "__all__"
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Registration
-        fields = ["student", "course", "status"]
+        fields = "__all__"
