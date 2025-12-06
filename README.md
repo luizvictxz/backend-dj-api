@@ -37,7 +37,6 @@ matrículas e relatórios financeiros.
 
 -   CRUD completo para Alunos, Cursos e Matrículas.
 -   Endpoint personalizado para **Marcar Matrícula como Paga**.
--   Filtros de busca (ex: listar matrículas de um aluno específico).
 -   **Relatório Financeiro JSON:** Total devido por aluno e por curso.
 -   **Relatório SQL Bruto:** Estatísticas de alunos por curso usando
     `connection.cursor()` e queries manuais.
@@ -106,17 +105,12 @@ docker compose exec web python manage.py createsuperuser
 -   Relatório Financeiro (JSON):
     http://localhost:8000/api/financial-report/
 
-### 🛠️ Funcionalidades Específicas (Desafio)
+### 🛠️ Funcionalidades Específicas
 
-1.  **SQL Bruto e Agregação (Item 7 do Desafio):**\
-    Estatísticas por curso usando JOIN, COUNT e GROUP BY.\
-    URL: http://localhost:8000/api/courses/statistics/
+1.  URL: http://localhost:8000/api/courses/statistics/
 
 2.  **Listar Matrículas de um Aluno:**\
-    URL:
-    http://localhost:8000/api/registrations/?student_id=ID_DO_ALUNO\
-    OU via Action:
-    http://localhost:8000/api/students/ID_DO_ALUNO/registrations/
+    URL: http://localhost:8000/api/students/ID_DO_ALUNO/registrations/
 
 3.  **Marcar Matrícula como Paga:**\
     Faça um POST (vazio) para:\
@@ -139,20 +133,3 @@ docker compose exec web python manage.py createsuperuser
     desafio_dj.sql: Arquivo SQL manual solicitado no desafio.
     docker-compose.yml: Orquestração dos containers.
     Dockerfile: Configuração da imagem Python.
-
-------------------------------------------------------------------------
-
-## 👤 Autor
-
-Projeto desenvolvido como parte do processo seletivo para Estágio
-Python/Django 2026.1.
-
-------------------------------------------------------------------------
-
-### O que este README cobre (baseado no PDF)
-
-1.  **Como rodar:** Explica `docker compose up --build`.\
-2.  **URLs:** Lista tanto o frontend quanto a API.\
-3.  **Tecnologias:** Menciona Python, Django, DRF e Postgres.\
-4.  **Requisitos Específicos:** Destaca onde estão as funcionalidades de
-    SQL Bruto e relatórios.
