@@ -1,4 +1,4 @@
-# Desafio Técnico - Sistema de Gestão Escolar (Estágio Python 2026.1)
+# Desafio Técnico - Sistema de Gestão Escolar 
 
 Este projeto é uma aplicação web fullstack desenvolvida com **Django** e
 **Django Rest Framework**, utilizando **PostgreSQL** como banco de dados
@@ -142,8 +142,3 @@ POST → http://localhost:8000/api/registrations/ID/mark_as_paid/
     Dockerfile             → Build
 
 ---
-
-# 👤 Autor
-
-Projeto desenvolvido como parte do processo seletivo para Estágio
-Python/Django 2026.1.
