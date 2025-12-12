@@ -101,6 +101,8 @@ docker compose exec web python manage.py createsuperuser
 
 ## 🔌 API
 
+<!-- Para o gerenciamento através da API, entre como superusuário-->
+
 -   API Root: http://localhost:8000/api/
 -   Alunos: http://localhost:8000/api/students/
 -   Cursos: http://localhost:8000/api/courses/
