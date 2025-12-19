@@ -25,51 +25,7 @@ a execução com Docker.
 
 ---
 
-## ✅ 1. Criar e Ativar o Ambiente Virtual
-
-Se quiser rodar o projeto localmente:
-
-```bash
-python -m venv venv
-```
-
-Ativar o ambiente:
-
-### Windows
-
-```bash
-venv\Scripts\activate
-```
-
-### Linux/Mac
-
-```bash
-source venv/bin/activate
-```
-
----
-
-## ✅ 2. Instalar as Dependências (Modo Local)
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## ✅ 3. Configurar Variáveis de Ambiente
-
-Crie o arquivo `.env`:
-
-```bash
-cp .env.example .env
-```
-
-Edite conforme necessário (DB_NAME, DB_USER etc.).
-
----
-
-# 🚢 4. Executar com Docker (Recomendado)
+# 🚢 1. Executar com Docker (Recomendado)
 
 ### Iniciar containers:
 
@@ -81,7 +37,7 @@ O servidor iniciará automaticamente após as migrações.
 
 ---
 
-## 👤 5. Criar Superusuário
+## 👤 2. Criar Superusuário
 
 ```bash
 docker compose exec web python manage.py createsuperuser
