@@ -17,29 +17,44 @@ matrículas e relatórios financeiros.
 -   **Infraestrutura:** Docker & Docker Compose
 
 ---
+## ⚙️ Como Rodar o Projeto (Docker)
 
-# ⚙️ Como Rodar o Projeto --- Passo a Passo
+Siga os passos abaixo para executar a aplicação em qualquer ambiente:
 
-Abaixo está o processo completo, desde a criação do ambiente virtual até
-a execução com Docker.
+### 1. Configurar Variáveis de Ambiente
 
----
+Na raiz do projeto, crie um arquivo `.env` baseado no exemplo fornecido.
+Você pode copiar o exemplo:
 
-# 🚢 1. Executar com Docker (Recomendado)
+``` bash
+cp .env.example .env
+```
 
-### Iniciar containers:
+Certifique-se de que as credenciais no .env (DB_NAME, DB_USER, etc.)
+correspondam ao que você deseja usar.
 
-```bash
+------------------------------------------------------------------------
+
+### 2. Subir os Containers
+
+Execute o comando abaixo para construir a imagem e iniciar os serviços
+(Aplicação + Banco de Dados). O sistema rodará automaticamente as
+migrações.
+
+``` bash
 docker compose up --build
 ```
 
-O servidor iniciará automaticamente após as migrações.
+Aguarde até aparecer a mensagem de que o servidor iniciou na porta 8000.
 
----
+------------------------------------------------------------------------
 
-## 👤 2. Criar Superusuário
+### 3. Criar um Superusuário (Opcional)
 
-```bash
+Para acessar o Django Admin ou ter permissão total no sistema, crie um
+usuário administrador executando em outro terminal:
+
+``` bash
 docker compose exec web python manage.py createsuperuser
 ```
 
